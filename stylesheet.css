@@ -1,0 +1,89 @@
+/* index.css */
+:root {
+  --iris: #5a4fcf;   /* アイリスカラー */
+  --iris-light: #f2f0fb; /* 薄いアイリス背景 */
+  --white: #ffffff;
+  --text: #222;
+}
+
+body {
+  font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
+  margin: 0;
+  padding: 1rem;
+  background-color: var(--iris-light);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: 1.4rem;
+  color: var(--iris);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.1rem;
+  color: var(--iris);
+  margin: 1rem 0 0.5rem;
+  border-left: 4px solid var(--iris);
+  padding-left: 0.5rem;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: var(--iris);
+  margin: 1.5rem 0;
+  opacity: 0.2;
+}
+
+.box8 {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.box9 {
+  background: var(--iris-light);
+  border-radius: 8px;
+  padding: 0.8rem;
+  margin: 0.8rem 0;
+}
+
+a {
+  display: block;
+  padding: 0.6rem 0.8rem;
+  margin: 0.4rem 0;
+  text-decoration: none;
+  color: var(--iris);
+  background: var(--white);
+  border: 1px solid var(--iris);
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.95rem;
+  transition: 0.2s;
+}
+
+a:hover {
+  background: var(--iris);
+  color: var(--white);
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  a {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+}
