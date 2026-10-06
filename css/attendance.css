@@ -1,89 +1,124 @@
-/* index.css */
+/* attendance.css (リニューアル版) */
 :root {
-  --iris: #5a4fcf;   /* アイリスカラー */
-  --iris-light: #f2f0fb; /* 薄いアイリス背景 */
+  --iris: #6a4fe0;          /* メインの紫 */
+  --iris-deep: #4a34b8;     /* 濃い紫（見出し・ホバー用） */
+  --iris-soft: #e6e0fb;     /* 線やアクセント用の淡い紫 */
+  --iris-light: #f6f3ff;    /* ページ背景 */
   --white: #ffffff;
-  --text: #222;
+  --text: #2a2540;
+  --radius: 14px;
 }
 
 body {
   font-family: "Hiragino Sans", "Noto Sans JP", sans-serif;
-  margin: 0;
-  padding: 1rem;
+  margin: 0 auto;
+  max-width: 640px;
+  padding: 1.5rem 1rem 3rem;
   background-color: var(--iris-light);
   color: var(--text);
-  line-height: 1.6;
-}
-
-h1 {
-  font-size: 1.4rem;
-  color: var(--iris);
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  line-height: 1.7;
   text-align: center;
 }
 
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--iris-deep);
+  margin: 1.5rem 0 0.75rem;
+}
+
 h2 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
   color: var(--iris);
-  margin: 1rem 0 0.5rem;
-  border-left: 4px solid var(--iris);
-  padding-left: 0.5rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+/* 見出しの下に短い線（中央寄せに合わせて左線から変更） */
+h2::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin: 0.4rem auto 0;
+  border-radius: 2px;
+  background: var(--iris);
 }
 
 hr {
   border: none;
   height: 1px;
   background: var(--iris);
-  margin: 1.5rem 0;
+  margin: 2rem 0;
   opacity: 0.2;
 }
 
 .box8 {
   background: var(--white);
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--iris-soft);
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 14px rgba(106, 79, 224, 0.08);
 }
 
 .box9 {
   background: var(--iris-light);
-  border-radius: 8px;
-  padding: 0.8rem;
-  margin: 0.8rem 0;
+  border-radius: 10px;
+  padding: 0.9rem;
+  margin: 0.9rem 0;
 }
 
 a {
   display: block;
-  padding: 0.6rem 0.8rem;
-  margin: 0.4rem 0;
+  padding: 0.8rem 1rem;
+  margin: 0.5rem 0;
   text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--iris);
   background: var(--white);
-  border: 1px solid var(--iris);
-  border-radius: 6px;
-  text-align: center;
-  font-size: 0.95rem;
-  transition: 0.2s;
+  border: 1.5px solid var(--iris);
+  border-radius: 999px;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s;
 }
 
+/* カーソルを乗せると色が変わる */
 a:hover {
+  background: var(--iris);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+/* キーボード操作でも分かるように */
+a:focus-visible {
+  outline: 3px solid var(--iris-soft);
+  outline-offset: 2px;
   background: var(--iris);
   color: var(--white);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  a {
+    transition: none;
+  }
+  a:hover {
+    transform: none;
+  }
+}
+
 @media (max-width: 600px) {
   body {
-    padding: 0.5rem;
+    padding: 1rem 0.75rem 2rem;
   }
 
   h1 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   a {
-    font-size: 0.9rem;
-    padding: 0.5rem;
+    font-size: 0.95rem;
+    padding: 0.7rem 0.9rem;
   }
 }
