@@ -26,6 +26,10 @@ body {
   text-align: center;
 }
 
+header {
+  text-align: left;
+}
+
 h1 {
   font-size: 1.6rem;
   font-weight: 700;
@@ -88,11 +92,11 @@ header a {
   display: inline;
   background: none;
   border: none;
-  border-radius: none;
-  transition: none
+  transition: color 0.2s;
 }
 
-header a:hover {
+header a:hover,
+header a:focus-visible {
   background: none;
   color: var(--iris-deep);
   transform: none;
