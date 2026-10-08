@@ -39,6 +39,9 @@ header {
   gap: 0.5rem;
 }
 
+.col2 p {
+  margin: 0;
+}
 
 main {
   max-width: 640px;
