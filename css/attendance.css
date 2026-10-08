@@ -39,7 +39,7 @@ header {
   gap: 0.5rem;
 }
 
-.col2 p {
+.col2 p, .col2 a {
   margin: 0;
 }
 
@@ -118,8 +118,7 @@ header a {
   transition: color 0.2s;
 }
 
-header a:hover,
-header a:focus-visible {
+header a:hover, header a:focus-visible {
   text-decoration: underline;
   background: none;
   color: var(--iris-deep);
