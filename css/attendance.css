@@ -4,9 +4,10 @@
   --iris-deep: #4a34b8;     /* 濃い紫（見出し・ホバー用） */
   --iris-soft: #e6e0fb;     /* 線やアクセント用の淡い紫 */
   --iris-light: #f6f3ff;    /* ページ背景 */
+  --iris-gray: #CFCDDB;          /* グレー背景 */
   --white: #ffffff;
   --text: #2a2540;
-  --radius: 14px;
+  --radius: 12px;
 }
 
 .zen-kurenaido-regular {
@@ -17,10 +18,8 @@
 
 body {
   font-family: "Zen Kurenaido", sans-serif;
-  margin: 0 auto;
-  max-width: 640px;
-  padding: 1.5rem 1rem 3rem;
   background-color: var(--iris-light);
+  margin: 0;
   color: var(--text);
   line-height: 1.7;
   text-align: center;
@@ -28,6 +27,16 @@ body {
 
 header {
   text-align: left;
+  background: var(--white);
+  border-bottom: 3px solid var(--iris-deep);
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
 }
 
 h1 {
@@ -36,6 +45,10 @@ h1 {
   letter-spacing: 0.04em;
   color: var(--iris-deep);
   margin: 1.5rem 0 0.75rem;
+}
+
+header h1 {
+  margin: 0;
 }
 
 h2 {
@@ -64,7 +77,7 @@ hr {
   opacity: 0.2;
 }
 
-.box8 {
+.box {
   background: var(--white);
   border: 1px solid var(--iris-soft);
   border-radius: var(--radius);
@@ -83,7 +96,7 @@ a {
   color: var(--iris);
   background: var(--white);
   border: 1.5px solid var(--iris);
-  border-radius: 999px;
+  border-radius: var(--radius);
   transition: background-color 0.2s, color 0.2s, transform 0.2s;
 }
 
@@ -97,9 +110,16 @@ header a {
 
 header a:hover,
 header a:focus-visible {
+  text-decoration: underline;
   background: none;
   color: var(--iris-deep);
   transform: none;
+}
+
+a[href$="/null"] {
+  color: var(--white);
+  background: var(--iris-gray);
+  border: 1.5px solid var(--iris-light);
 }
 
 /* カーソルを乗せると色が変わる */
@@ -126,17 +146,17 @@ a:focus-visible {
   }
 }
 
-@media (max-width: 600px) {
-  body {
-    padding: 1rem 0.75rem 2rem;
-  }
+  @media (max-width: 600px) {
+    main {
+      padding: 1rem 0.75rem 2rem;
+    }
 
-  h1 {
-    font-size: 1.4rem;
-  }
+    h1 {
+      font-size: 1.4rem;
+    }
 
-  a {
-    font-size: 0.95rem;
-    padding: 0.7rem 0.9rem;
+    a {
+      font-size: 0.95rem;
+      padding: 0.7rem 0.9rem;
+    }
   }
-}
