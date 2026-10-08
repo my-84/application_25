@@ -33,6 +33,13 @@ header {
   margin-bottom: 1.25rem;
 }
 
+.col2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+
 main {
   max-width: 640px;
   margin: 0 auto;
@@ -116,12 +123,6 @@ header a:focus-visible {
   transform: none;
 }
 
-a[href$="/null"] {
-  color: var(--white);
-  background: var(--iris-gray);
-  border: 1.5px solid var(--iris-light);
-}
-
 /* カーソルを乗せると色が変わる */
 a:hover {
   background: var(--iris);
@@ -135,6 +136,13 @@ a:focus-visible {
   outline-offset: 2px;
   background: var(--iris);
   color: var(--white);
+}
+
+a[href$="/null"] {
+  color: var(--white);
+  background: var(--iris-gray);
+  border: 1.5px solid var(--iris-light);
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
