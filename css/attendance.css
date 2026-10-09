@@ -17,6 +17,7 @@
 }
 
 /* ヘッダー */
+
 header {
   position: sticky;
   top: 0;
@@ -47,20 +48,38 @@ header a:hover, header a:focus-visible {
   text-decoration: underline;
   transform: none;
 }
-/* ヘッダー終わり */
 
+/* ポップアップまわり */
+/* 手動入力ボタン */
 .inputnum {
   position: fixed;
   top: 30px;
   right: 30px;
 }
 
+/* インプットライン(見た目調整用) */
 .input-content {
   display: flex;
   gap: 0.5rem;
   margin: 1rem 0;
 }
 
+/* インプットフィールド */
+.input {
+  flex: 1;
+  box-sizing: border-box;
+  font-family: inherit;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid var(--iris-soft);
+  border-radius: var(--radius);
+}
+
+input:focus-visible {
+  outline: 1px solid var(--iris);
+}
+
+/* 閉じるボタン */
 #closeButton {
   font-family: inherit;
   cursor: pointer;
@@ -78,33 +97,8 @@ header a:hover, header a:focus-visible {
   transition: background-color 0.2s, color 0.2s;
 }
 
-.btn {
-  font-family: inherit;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  font-weight: normal;
-  color: var(--white);
-  background: var(--iris);
-  border: 1.5px solid var(--iris);
-  border-radius: var(--radius);
-  transition: background-color 0.2s, color 0.2s, transform 0.2s;
-}
 
-.input {
-  flex: 1;
-  box-sizing: border-box;
-  font-family: inherit;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: 1.5px solid var(--iris-soft);
-  border-radius: var(--radius);
-}
-
-input:focus-visible {
-  outline: 1px solid var(--iris);
-}
-
+/* 黒背景 */
 .popup {
   display: none;
   position: fixed;
@@ -113,6 +107,7 @@ input:focus-visible {
   animation: backdrop-in 0.3s ease-out;
 }
 
+/* ポップアップコンテンツ */
 .popup-content {
   width: 90%;
   max-width: 320px;
@@ -123,6 +118,7 @@ input:focus-visible {
   animation: popup-in 0.3s ease-out;
 }
 
+/* アニメーションまわり */
 .popup.closing .popup-content {
   pointer-events: none;
   animation: popup-out 0.2s ease-in forwards;
@@ -137,6 +133,8 @@ input:focus-visible {
 .popup.closing {
   animation: backdrop-out 0.3s ease-in 0s forwards;
 }
+
+/* メインコンテンツ */
 
 body {
   font-family: "Zen Kurenaido", sans-serif;
@@ -171,6 +169,20 @@ main {
   margin-bottom: 1.25rem;
   box-shadow: 0 4px 14px rgba(106, 79, 224, 0.08);
 }
+
+.btn {
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--white);
+  background: var(--iris);
+  border: 1.5px solid var(--iris);
+  border-radius: var(--radius);
+  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
 
 h1 {
   font-size: 1.6rem;
@@ -226,14 +238,12 @@ a[href$="/null"] {
   pointer-events: none;
 }
 
-/* カーソルを乗せると色が変わる */
 a:hover {
   background: var(--iris);
   color: var(--white);
   transform: translateY(-1px);
 }
 
-/* キーボード操作でも分かるように */
 a:focus-visible {
   outline: 3px solid var(--iris-soft);
   outline-offset: 2px;
@@ -242,11 +252,13 @@ a:focus-visible {
 }
 
 /* アニメーション */
+
 @keyframes popup-in {
   from {
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -258,6 +270,7 @@ a:focus-visible {
     opacity: 1;
     transform: scale(1);
   }
+
   to {
     opacity: 0;
     transform: scale(1.5);
@@ -265,13 +278,23 @@ a:focus-visible {
 }
 
 @keyframes backdrop-in {
-  from { background: rgba(0, 0, 0, 0); }
-  to   { background: rgba(0, 0, 0, 0.5); }
+  from {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0.5);
+  }
 }
 
 @keyframes backdrop-out {
-  from { background: rgba(0, 0, 0, 0.5); }
-  to   { background: rgba(0, 0, 0, 0); }
+  from {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  to {
+    background: rgba(0, 0, 0, 0);
+  }
 }
 
 
@@ -279,6 +302,7 @@ a:focus-visible {
   a {
     transition: none;
   }
+
   a:hover {
     transform: none;
   }
