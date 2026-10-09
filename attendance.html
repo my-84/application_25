@@ -83,6 +83,7 @@
   <script>
     const openButton = document.getElementById("openButton");
     const popup = document.getElementById("popup");
+    const closeButton = document.getElementById("closeButton");
 
     openButton.addEventListener("click", function () {
       popup.classList.toggle("open");
@@ -105,7 +106,13 @@
     });
 
     closeButton.addEventListener("click", function () {
-      popup.classList.remove("open");
+      popup.classList.add("closing");
+    });
+
+    popup.addEventListener("animationend", function (event) {
+      if (event.target === popup && popup.classList.contains("closing")) {
+        popup.classList.remove("open", "closing");
+      }
     });
   </script>
 </body>
