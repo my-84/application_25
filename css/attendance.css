@@ -49,16 +49,74 @@ header a:hover, header a:focus-visible {
 
 .inputnum {
   position: fixed;
-  top: 10px;
-  right: 10px;
+  top: 30px;
+  right: 30px;
+}
+
+.input-content {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+#closeButton {
+  font-family: inherit;
+  cursor: pointer;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 1rem 0;
+  background: var(--white);
+  color: var(--iris);
+}
+
+.btn {
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--white);
+  background: var(--iris);
+  border: 1.5px solid var(--iris);
+  border-radius: var(--radius);
+  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.input {
+  flex: 1;
+  box-sizing: border-box;
+  font-family: inherit;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid var(--iris-soft);
+  border-radius: var(--radius);
+}
+
+input:focus-visible {
+  outline: 1px solid var(--iris);
 }
 
 .popup {
   display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+  width: 90%;
+  max-width: 320px;
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 14px rgba(106, 79, 224, 0.08);
 }
 
 .popup.open {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
@@ -71,7 +129,7 @@ body {
 }
 
 main {
-  max-width: 640px;
+  /* max-width: 640px; */
   margin: 0 auto;
   padding: 1.5rem 1rem 3rem;
 }
@@ -134,7 +192,7 @@ a {
   margin: 0.5rem 0;
   text-decoration: none;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: normal;
   color: var(--iris);
   background: var(--white);
   border: 1.5px solid var(--iris);

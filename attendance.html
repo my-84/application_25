@@ -37,10 +37,15 @@
   </header>
 
   <div class="inputnum">
-    <button id="openButton">手動入力</button>
+    <button id="openButton" class="btn">手動入力</button>
     <div id="popup" class="popup">
-      <input type="number" id="roomInput" placeholder="講義室ナンバー">
-      <button id="goButton">移動</button>
+      <div class="popup-content">
+        <div class="input-content">
+          <input type="number" id="roomInput" class="input" placeholder="講義室番号を入力">
+          <button id="goButton" class="btn">移動</button>
+        </div>
+        <button id="closeButton" class="btn">閉じる</button>
+      </div>
     </div>
   </div>
 
@@ -89,7 +94,7 @@
     goButton.addEventListener("click", function () {
       const roomId = roomInput.value;
 
-    // if (Number.isNaN(Number(roomId)) || roomId.length !== 4)
+      // if (Number.isNaN(Number(roomId)) || roomId.length !== 4)
       if (!/^[0-9]{4}$/.test(roomId)) {
         alert("4桁の番号を入力してください");
         return;
@@ -97,6 +102,10 @@
 
       const url = "https://attendance.is.chibatech.ac.jp/attendance/class_room/" + roomId;
       window.location.href = url;
+    });
+
+    closeButton.addEventListener("click", function () {
+      popup.classList.remove("open");
     });
   </script>
 </body>
