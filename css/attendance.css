@@ -18,6 +18,8 @@
 
 /* ヘッダー */
 header {
+  position: sticky;
+  top: 0;
   background: var(--white);
   border-bottom: 3px solid var(--iris-deep);
   text-align: left;
