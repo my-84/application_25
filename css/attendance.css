@@ -1,19 +1,64 @@
-/* attendance.css (リニューアル版) */
+/* attendance.css */
 :root {
   --iris: #6a4fe0;          /* メインの紫 */
   --iris-deep: #4a34b8;     /* 濃い紫（見出し・ホバー用） */
   --iris-soft: #e6e0fb;     /* 線やアクセント用の淡い紫 */
   --iris-light: #f6f3ff;    /* ページ背景 */
-  --iris-gray: #CFCDDB;          /* グレー背景 */
+  --iris-gray: #CFCDDB;     /* 無効色 */
   --white: #ffffff;
   --text: #2a2540;
-  --radius: 12px;
+  --radius: 8px;
 }
 
 .zen-kurenaido-regular {
   font-family: "Zen Kurenaido", sans-serif;
   font-weight: 400;
   font-style: normal;
+}
+
+/* ヘッダー */
+header {
+  background: var(--white);
+  border-bottom: 3px solid var(--iris-deep);
+  text-align: left;
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin: 0;
+}
+
+header nav, header nav a {
+  display: inline;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+header a:hover, header a:focus-visible {
+  background: none;
+  color: var(--iris-deep);
+  text-decoration: underline;
+  transform: none;
+}
+/* ヘッダー終わり */
+
+.inputnum {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.popup {
+  display: none;
+}
+
+.popup.open {
+  display: block;
 }
 
 body {
@@ -25,12 +70,10 @@ body {
   text-align: center;
 }
 
-header {
-  text-align: left;
-  background: var(--white);
-  border-bottom: 3px solid var(--iris-deep);
-  padding: 1.25rem 1rem;
-  margin-bottom: 1.25rem;
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
 }
 
 .col2 {
@@ -43,32 +86,30 @@ header {
   margin: 0;
 }
 
-main {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
+.box {
+  background: var(--white);
+  border: 1px solid var(--iris-soft);
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 14px rgba(106, 79, 224, 0.08);
 }
 
 h1 {
   font-size: 1.6rem;
-  font-weight: 700;
+  font-weight: bold;
   letter-spacing: 0.04em;
   color: var(--iris-deep);
   margin: 1.5rem 0 0.75rem;
 }
 
-header h1 {
-  margin: 0;
-}
-
 h2 {
   font-size: 1.15rem;
-  font-weight: 600;
+  font-weight: bold;
   color: var(--iris);
   margin: 1.5rem 0 0.75rem;
 }
 
-/* 見出しの下に短い線（中央寄せに合わせて左線から変更） */
 h2::after {
   content: "";
   display: block;
@@ -87,15 +128,6 @@ hr {
   opacity: 0.2;
 }
 
-.box {
-  background: var(--white);
-  border: 1px solid var(--iris-soft);
-  border-radius: var(--radius);
-  padding: 1.25rem 1rem;
-  margin-bottom: 1.25rem;
-  box-shadow: 0 4px 14px rgba(106, 79, 224, 0.08);
-}
-
 a {
   display: block;
   padding: 0.8rem 1rem;
@@ -110,19 +142,11 @@ a {
   transition: background-color 0.2s, color 0.2s, transform 0.2s;
 }
 
-header a {
-  padding: 0;
-  display: inline;
-  background: none;
-  border: none;
-  transition: color 0.2s;
-}
-
-header a:hover, header a:focus-visible {
-  text-decoration: underline;
-  background: none;
-  color: var(--iris-deep);
-  transform: none;
+a[href$="/null"] {
+  color: var(--white);
+  background: var(--iris-gray);
+  border: 1.5px solid var(--iris-light);
+  pointer-events: none;
 }
 
 /* カーソルを乗せると色が変わる */
@@ -140,13 +164,6 @@ a:focus-visible {
   color: var(--white);
 }
 
-a[href$="/null"] {
-  color: var(--white);
-  background: var(--iris-gray);
-  border: 1.5px solid var(--iris-light);
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   a {
     transition: none;
@@ -156,17 +173,17 @@ a[href$="/null"] {
   }
 }
 
-  @media (max-width: 600px) {
-    main {
-      padding: 1rem 0.75rem 2rem;
-    }
-
-    h1 {
-      font-size: 1.4rem;
-    }
-
-    a {
-      font-size: 0.95rem;
-      padding: 0.7rem 0.9rem;
-    }
+@media (max-width: 600px) {
+  main {
+    padding: 1.5rem 0.75rem 2rem;
   }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  a {
+    font-size: 0.95rem;
+    padding: 0.7rem 0.9rem;
+  }
+}
