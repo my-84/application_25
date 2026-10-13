@@ -111,6 +111,7 @@ input:focus-visible {
 .popup-content {
   width: 90%;
   max-width: 320px;
+  box-sizing: border-box;
   background: var(--white);
   padding: 1.5rem;
   border-radius: var(--radius);
