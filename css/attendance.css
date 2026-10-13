@@ -117,7 +117,7 @@ input:focus-visible {
   padding: 1.5rem;
   border-radius: var(--radius);
   box-shadow: 0 4px 14px rgba(106, 79, 224, 0.08);
-  /* animation: popup-in 0.3s ease-out; */
+  animation: popup-in 0.3s ease-out;
 }
 
 /* アニメーションまわり */
@@ -130,10 +130,6 @@ input:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.popup.open .popup-content {
-  animation: popup-in 0.3s ease-out;
 }
 
 .popup.closing {
