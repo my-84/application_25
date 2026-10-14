@@ -197,6 +197,7 @@ main {
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: bold;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
