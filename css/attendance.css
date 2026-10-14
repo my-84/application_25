@@ -19,6 +19,7 @@
 /* ヘッダー */
 
 header {
+  z-index: 10;
   position: sticky;
   top: 0;
   background: var(--white);
@@ -51,17 +52,19 @@ header a:hover, header a:focus-visible {
 
 /* 講義登録申請 */
 .query {
+  z-index: 20;
   position: fixed;
-  bottom: 120px;
-  right: 30px;
+  bottom: 150px;
+  right: 40px;
 }
 
 /* ポップアップまわり */
 /* 手動入力ボタン */
 .inputnum {
+  z-index: 30;
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 40px;
+  right: 40px;
 }
 
 /* インプットライン(見た目調整用) */
@@ -195,14 +198,14 @@ main {
 .rbtn {
   font-family: inherit;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   color: var(--iris-deep);
   background: var(--white);
   border: 1px solid var(--iris);
@@ -346,5 +349,21 @@ a:focus-visible {
   a {
     font-size: 0.95rem;
     padding: 0.7rem 0.9rem;
+  }
+
+  .query {
+    right: 30px;
+    bottom: 120px;
+  }
+
+  .inputnum {
+    right: 30px;
+    bottom: 30px;
+  }
+
+  .rbtn {
+    font-size: 0.8rem;
+    width: 70px;
+    height: 70px;
   }
 }
