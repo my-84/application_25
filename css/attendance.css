@@ -49,11 +49,19 @@ header a:hover, header a:focus-visible {
   transform: none;
 }
 
+/* 講義登録申請 */
+.query {
+  position: fixed;
+  padding: 0;
+  bottom: 120px;
+  right: 30px;
+}
+
 /* ポップアップまわり */
 /* 手動入力ボタン */
 .inputnum {
   position: fixed;
-  top: 30px;
+  bottom: 30px;
   right: 30px;
 }
 
@@ -185,6 +193,20 @@ main {
   transition: background-color 0.2s, color 0.2s, transform 0.2s;
 }
 
+.rbtn {
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-align: center;
+  width: 70px;
+  height: 70px;
+  color: var(--iris-deep);
+  background: var(--white);
+  border: 1px solid var(--iris);
+  border-radius: 50%;
+  opacity: 70%;
+}
 
 h1 {
   font-size: 1.6rem;
