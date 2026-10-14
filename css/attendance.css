@@ -52,7 +52,6 @@ header a:hover, header a:focus-visible {
 /* 講義登録申請 */
 .query {
   position: fixed;
-  padding: 0;
   bottom: 120px;
   right: 30px;
 }
@@ -198,7 +197,9 @@ main {
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: bold;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   width: 70px;
   height: 70px;
   color: var(--iris-deep);
