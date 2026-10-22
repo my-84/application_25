@@ -37,7 +37,7 @@ if (currentLectures.length > 0) {
   for (const lecture of currentLectures) {
     const link = document.createElement("a");
     link.href = "https://attendance.is.chibatech.ac.jp/attendance/class_room/" + lecture.num;
-    link.textContent = lecture.name + "：" + lecture.num + "教室";
+    link.textContent = lecture.name + "　：　" + lecture.num + "教室";
     box.appendChild(link);
   }
   nowBox.appendChild(box);
