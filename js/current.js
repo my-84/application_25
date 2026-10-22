@@ -12,14 +12,11 @@ function isNow(lecture) {
     return false;
   }
 
-  const start = lecture.period[0];
-  const end = lecture.period[1] + 1; // 終了時限の「次の時限」の開始時刻が終わりの時刻
-
-  const startTime = periods[start - 1]["time"];
-  const endTime = periods[end - 1]["time"];
+  const openTime = periods[lecture.period - 1]["open"];
+  const closeTime = periods[lecture.period - 1]["close"];
 
   // 開始以上・終了未満（境目の二重判定を避ける）
-  return startTime <= time && time < endTime;
+  return openTime <= time && time < closeTime;
 }
 
 // ===== 開講中の講義を集める =====
@@ -34,19 +31,19 @@ for (const lecture of lectures) {
 const nowBox = document.getElementById("nowBox");
 
 if (currentLectures.length > 0) {
-  const title = document.createElement("h1");
-  title.textContent = "いま開かれている講義";
-  nowBox.appendChild(title);
-
   const box = document.createElement("div");
   box.className = "box";
 
   for (const lecture of currentLectures) {
     const link = document.createElement("a");
     link.href = "https://attendance.is.chibatech.ac.jp/attendance/class_room/" + lecture.num;
-    link.textContent = lecture.name;
+    link.textContent = lecture.name + "：" + lecture.num + "教室";
     box.appendChild(link);
   }
-
   nowBox.appendChild(box);
+} else {
+  const noLecture = document.createElement("p");
+  noLecture.textContent = "－現在登録できる講義はありません－";
+  noLecture.className = "no-lecture";
+  nowBox.appendChild(noLecture);
 }
