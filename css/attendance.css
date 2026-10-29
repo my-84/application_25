@@ -30,7 +30,6 @@
 
 
 /* ヘッダー */
-
 header {
   z-index: 10;
   position: sticky;
@@ -65,6 +64,8 @@ header a:hover, header a:focus-visible {
   transform: none;
 }
 
+
+/* 各種ボタン */
 /* 講義登録申請 */
 .query {
   z-index: 20;
@@ -129,7 +130,6 @@ input:focus-visible {
   transition: background-color 0.2s, color 0.2s;
 }
 
-
 /* 黒背景 */
 .popup {
   display: none;
@@ -167,8 +167,8 @@ input:focus-visible {
   animation: backdrop-out 0.3s ease-in 0s forwards;
 }
 
-/* メインコンテンツ */
 
+/* メインコンテンツ */
 body {
   font-family: "BIZ UDPGothic", sans-serif;
   background-color: var(--iris-light);
@@ -308,8 +308,8 @@ a:focus-visible {
   color: var(--white);
 }
 
-/* アニメーション */
 
+/* アニメーション */
 @keyframes popup-in {
   from {
     opacity: 0;
