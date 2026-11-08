@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>報告文ツール</title>
+</head>
+<body>
+  <h1>報告文ツール</h1>
+
+  <!-- ジャンルを選ぶプルダウン（中身はJSで作る） -->
+  <select id="genre"></select>
+
+  <!-- 入力欄を入れる空の入れ物（中身はJSで作る） -->
+  <div id="fields"></div>
+
+  <button id="copyBtn">コピー</button>
+
+  <script>
+    // ジャンルごとの入力項目の一覧表
+    const genres = {
+      "落し物": ["品物", "場所"],
+      "迷子": ["名前", "服装"]
+    };
+
+    const select = document.getElementById("genre");
+    const fieldsDiv = document.getElementById("fields");
+    const copyBtn = document.getElementById("copyBtn");
+
+    // プルダウンの選択肢をつくる
+    for (const g of Object.keys(genres)) {
+      select.innerHTML += `<option>${g}</option>`;
+    }
+
+    // 選ばれたジャンルの入力欄をつくる
+    function showFields() {
+      fieldsDiv.innerHTML = "";
+      for (const f of genres[select.value]) {
+        fieldsDiv.innerHTML += `<label>${f}：<input></label><br>`;
+      }
+    }
+
+    // プルダウンが変わったら入力欄を作り直す
+    select.addEventListener("change", showFields);
+    showFields();
+
+    // ボタンが押されたら、文章を整形してコピーする
+    copyBtn.addEventListener("click", async function () {
+      const names = genres[select.value];
+      const inputs = fieldsDiv.querySelectorAll("input");
+
+      let text = `【${select.value}】\n`;
+      for (let i = 0; i < names.length; i++) {
+        text += `${names[i]}：${inputs[i].value}\n`;
+      }
+
+      await navigator.clipboard.writeText(text);
+      alert("コピーしました");
+    });
+  </script>
+</body>
+</html>
