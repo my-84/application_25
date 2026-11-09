@@ -8,52 +8,202 @@
 <body>
   <h1>報告文ツール</h1>
 
-  <!-- ジャンルを選ぶプルダウン（中身はJSで作る） -->
-  <select id="genre"></select>
+  <!-- ① ジャンル（選択肢はJSで作る） -->
+  <div>ジャンル：<select id="genre"></select></div>
 
-  <!-- 入力欄を入れる空の入れ物（中身はJSで作る） -->
+  <!-- ② 状態（選択肢はJSで作る。状態が1つだけのジャンルでは隠す） -->
+  <div id="stateRow">状態：<select id="state"></select></div>
+
+  <!-- ③ 入力欄（JSで作る） -->
   <div id="fields"></div>
 
   <button id="copyBtn">コピー</button>
 
   <script>
-    // ジャンルごとの入力項目の一覧表
+    // ===== データ（ここを書き換えれば、ジャンル・状態・項目が変わる） =====
+
+    // タイトルの区切り文字（【迷子＿親が探している】の「＿」）
+    const SEP = "＿";
+
+    // ジャンル → 状態 → 内容 の一覧表
+    //   title       : タイトルの部品。"{品物}" と書くと、入力された品物がそこに入る
+    //   titleFields : タイトルにだけ使う入力欄（本文の行には出ない）
+    //   fields      : 「項目：入力」の行になる入力欄
+    //   fixed       : 「項目：決まった文章」の行（入力不要）
+    //   freeText    : 項目名なしで、そのまま出す自由入力欄の名前
+    //   closing     : 最後に付ける決まった一文
     const genres = {
-      "落し物": ["品物", "場所"],
-      "迷子": ["名前", "服装"]
+      "落し物": {
+        "発見（取得）": {
+          title: ["落し物", "{品物}"],
+          titleFields: ["品物"],
+          fields: ["場所"]
+        },
+        "問い合わせ（捜索）": {
+          title: ["落し物", "{品物}", "捜索"],
+          titleFields: ["品物"],
+          freeText: "状況",
+          closing: "本部にご案内します。"
+        }
+      },
+      "迷子": {
+        "親が探している": {
+          title: ["迷子", "親が探している"],
+          fields: ["子供の名前", "服装"],
+          closing: "見つけたら報告をお願いします。"
+        },
+        "子供が探している": {
+          title: ["迷子", "子供が探している"],
+          fields: ["子供の名前", "服装", "同伴者", "特徴"],
+          closing: "見つけたら報告をお願いします。"
+        }
+      },
+      "けが人": {
+        "意識有・擦り傷": {
+          title: ["けが人", "意識有", "擦り傷"],
+          fields: ["場所"]
+        },
+        "意識なし・骨折": {
+          title: ["けが人", "意識なし", "骨折"],
+          fields: ["場所"],
+          fixed: { "補足": "「移動できない」とのことなので、担架での保健室への案内をお願いします。" }
+        }
+      },
+      "体調不良者": {
+        "意識有・腹痛": {
+          title: ["体調不良者", "意識有", "腹痛"],
+          fields: ["場所"],
+          fixed: { "詳細": "「移動できない」とのことなので、担架での保健室への案内をお願いします。" }
+        },
+        "意識なし・呼吸無": {
+          title: ["体調不良者", "意識なし", "呼吸無"],
+          fields: ["場所"],
+          fixed: { "詳細": "AED、救急車対応を行います。" }
+        },
+        "意識なし・呼吸有": {
+          title: ["体調不良者", "意識なし", "呼吸有"],
+          fields: ["場所"],
+          fixed: { "詳細": "通用門前に移動して対応を行います。" }
+        }
+      },
+      "クレーマー": {
+        "報告": {
+          title: ["クレーマー"],
+          fields: ["背丈", "服装", "位置", "上回生"]
+        }
+      },
+      "不審者": {
+        "報告": {
+          title: ["不審者"],
+          fields: ["背丈", "服装", "位置", "年齢"]
+        }
+      }
     };
 
+    // ===== 文章をつくる関数 =====
+
+    // values は { 項目名: 入力された文字 } の形
+    function makeText(genre, state, values) {
+      const data = genres[genre][state];
+      const fixed = data.fixed || {};
+      const lines = [];
+
+      // 1行目：タイトル（"{品物}" の部分を入力値に置き換える）
+      const parts = data.title.map(function (part) {
+        if (part.startsWith("{")) {
+          return values[part.slice(1, -1)];
+        }
+        return part;
+      });
+      lines.push(`【${parts.join(SEP)}】`);
+
+      // 「項目：入力」の行。コロンの位置をそろえるため、
+      // いちばん長い項目名に合わせて全角スペースで埋める
+      const labels = (data.fields || []).concat(Object.keys(fixed));
+      let width = 0;
+      for (const label of labels) {
+        if (label.length > width) width = label.length;
+      }
+      for (const label of labels) {
+        const value = (label in fixed) ? fixed[label] : values[label];
+        const pad = "　".repeat(width - label.length);
+        lines.push(`${label}${pad}：${value}`);
+      }
+
+      // 自由入力欄（項目名なし）
+      if (data.freeText) {
+        lines.push(values[data.freeText]);
+      }
+
+      // 締めの一文
+      if (data.closing) {
+        lines.push(data.closing);
+      }
+
+      return lines.join("\n");
+    }
+
+    // ===== 画面の処理 =====
+
     const select = document.getElementById("genre");
+    const stateSelect = document.getElementById("state");
+    const stateRow = document.getElementById("stateRow");
     const fieldsDiv = document.getElementById("fields");
     const copyBtn = document.getElementById("copyBtn");
 
-    // プルダウンの選択肢をつくる
+    // ジャンルの選択肢をつくる
     for (const g of Object.keys(genres)) {
       select.innerHTML += `<option>${g}</option>`;
     }
 
-    // 選ばれたジャンルの入力欄をつくる
+    // 選ばれたジャンルの状態の選択肢をつくる
+    function showStates() {
+      stateSelect.innerHTML = "";
+      const states = Object.keys(genres[select.value]);
+      for (const s of states) {
+        stateSelect.innerHTML += `<option>${s}</option>`;
+      }
+      // 状態が1つだけなら、選ぶ必要がないので隠す
+      stateRow.hidden = (states.length === 1);
+    }
+
+    // 選ばれたジャンル＋状態の入力欄をつくる
     function showFields() {
       fieldsDiv.innerHTML = "";
-      for (const f of genres[select.value]) {
-        fieldsDiv.innerHTML += `<label>${f}：<input></label><br>`;
+      const data = genres[select.value][stateSelect.value];
+
+      const labels = (data.titleFields || []).concat(data.fields || []);
+      for (const f of labels) {
+        fieldsDiv.innerHTML += `<label>${f}：<input data-label="${f}"></label><br>`;
+      }
+      if (data.freeText) {
+        fieldsDiv.innerHTML +=
+          `<label>${data.freeText}：<br><textarea data-label="${data.freeText}" rows="4"></textarea></label><br>`;
       }
     }
 
-    // プルダウンが変わったら入力欄を作り直す
-    select.addEventListener("change", showFields);
+    // ジャンルが変わったら：状態を入れ替えて、そのあと入力欄
+    select.addEventListener("change", function () {
+      showStates();
+      showFields();
+    });
+
+    // 状態が変わったら：入力欄だけ作り直す
+    stateSelect.addEventListener("change", showFields);
+
+    // ページを開いた直後
+    showStates();
     showFields();
 
-    // ボタンが押されたら、文章を整形してコピーする
+    // ボタンが押されたら、文章をつくってコピーする
     copyBtn.addEventListener("click", async function () {
-      const names = genres[select.value];
-      const inputs = fieldsDiv.querySelectorAll("input");
-
-      let text = `【${select.value}】\n`;
-      for (let i = 0; i < names.length; i++) {
-        text += `${names[i]}：${inputs[i].value}\n`;
+      // 入力欄の中身を { 項目名: 入力値 } にまとめる
+      const values = {};
+      for (const el of fieldsDiv.querySelectorAll("input, textarea")) {
+        values[el.dataset.label] = el.value;
       }
 
+      const text = makeText(select.value, stateSelect.value, values);
       await navigator.clipboard.writeText(text);
       alert("コピーしました");
     });
