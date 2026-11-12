@@ -17,6 +17,10 @@
   <!-- ③ 入力欄（JSで作る） -->
   <div id="fields"></div>
 
+  <!-- ④ プレビュー（入力に合わせて自動で更新される） -->
+  <h2>プレビュー</h2>
+  <pre id="preview"></pre>
+
   <button id="copyBtn">コピー</button>
 
   <script>
@@ -150,6 +154,21 @@
     const stateRow = document.getElementById("stateRow");
     const fieldsDiv = document.getElementById("fields");
     const copyBtn = document.getElementById("copyBtn");
+    const preview = document.getElementById("preview");
+
+    // 入力欄の中身を集めて、文章にして返す
+    function getText() {
+      const values = {};
+      for (const el of fieldsDiv.querySelectorAll("input, textarea")) {
+        values[el.dataset.label] = el.value;
+      }
+      return makeText(select.value, stateSelect.value, values);
+    }
+
+    // プレビューを今の文章に更新する
+    function updatePreview() {
+      preview.textContent = getText();
+    }
 
     // ジャンルの選択肢をつくる
     for (const g of Object.keys(genres)) {
@@ -180,6 +199,7 @@
         fieldsDiv.innerHTML +=
           `<label>${data.freeText}：<br><textarea data-label="${data.freeText}" rows="4"></textarea></label><br>`;
       }
+      updatePreview();
     }
 
     // ジャンルが変わったら：状態を入れ替えて、そのあと入力欄
@@ -191,20 +211,16 @@
     // 状態が変わったら：入力欄だけ作り直す
     stateSelect.addEventListener("change", showFields);
 
+    // 入力欄に文字を打つたびに：プレビューを更新
+    fieldsDiv.addEventListener("input", updatePreview);
+
     // ページを開いた直後
     showStates();
     showFields();
 
     // ボタンが押されたら、文章をつくってコピーする
     copyBtn.addEventListener("click", async function () {
-      // 入力欄の中身を { 項目名: 入力値 } にまとめる
-      const values = {};
-      for (const el of fieldsDiv.querySelectorAll("input, textarea")) {
-        values[el.dataset.label] = el.value;
-      }
-
-      const text = makeText(select.value, stateSelect.value, values);
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(getText());
       alert("コピーしました");
     });
   </script>
