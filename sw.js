@@ -1,5 +1,5 @@
 const CACHE_NAME = "report-tool-v1";
-const FILES = [, "./test.html"];
+const FILES = ["./test.html"];
 
 // 着任したとき：倉庫にファイルをしまう
 self.addEventListener("install", function (event) {
