@@ -39,6 +39,12 @@
   <button id="copyBtn">コピー</button>
 
   <script>
+
+    // サービスワーカーの登録
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js");
+    }
+
     // ===== データ（ここを書き換えれば、ジャンル・状態・項目が変わる） =====
 
     // タイトルの区切り文字（【迷子＿親が探している】の「＿」）
