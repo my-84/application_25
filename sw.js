@@ -18,3 +18,16 @@ self.addEventListener("fetch", function (event) {
         })
     );
 });
+
+// 新しく着任したとき：古い倉庫を捨て、新しい倉庫にファイルをしまう
+self.addEventListener("activate", function (event) {
+  event.waitUntil(
+    caches.keys().then(function (names) {
+      return Promise.all(
+        names
+          .filter(function (name) { return name !== CACHE_NAME; })
+          .map(function (name) { return caches.delete(name); })
+      );
+    })
+  );
+});
