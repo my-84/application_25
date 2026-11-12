@@ -29,8 +29,8 @@
 <body>
   <h1>報告文ツール</h1>
 
-  <!-- ① ジャンル（選択肢はJSで作る） -->
-  <div>ジャンル：<select id="genre"></select></div>
+  <!-- ① トラブル（選択肢はJSで作る） -->
+  <div>トラブル：<select id="genre"></select></div>
 
   <!-- ② 状態（選択肢はJSで作る。状態が1つだけのジャンルでは隠す） -->
   <div id="stateRow">状態：<select id="state"></select></div>
@@ -54,7 +54,7 @@
     // ===== データ（ここを書き換えれば、ジャンル・状態・項目が変わる） =====
 
     // タイトルの区切り文字（【迷子＿親が探している】の「＿」）
-    const SEP = "＿";
+    const SEP = "_";
 
     // ジャンル → 状態 → 内容 の一覧表
     //   title       : タイトルの部品。"{品物}" と書くと、入力された品物がそこに入る
@@ -64,14 +64,14 @@
     //   freeText    : 項目名なしで、そのまま出す自由入力欄の名前
     //   closing     : 最後に付ける決まった一文
     const genres = {
-      "落し物": {
+      "落とし物": {
         "発見（取得）": {
-          title: ["落し物", "{品物}"],
+          title: ["落とし物", "取得", "{品物}"],
           titleFields: ["品物"],
           fields: ["場所"]
         },
         "問い合わせ（捜索）": {
-          title: ["落し物", "{品物}", "捜索"],
+          title: ["落とし物", "捜索", "{品物}"],
           titleFields: ["品物"],
           freeText: "状況",
           closing: "本部にご案内します。"
@@ -90,31 +90,27 @@
         }
       },
       "けが人": {
-        "意識有・擦り傷": {
-          title: ["けが人", "意識有", "擦り傷"],
-          fields: ["場所"]
+        "意識有": {
+          title: ["けが人", "意識有", "{負傷内容}"],
+          titleFields: ["負傷内容"],
+          fields: ["場所", "補足"]
         },
-        "意識なし・骨折": {
-          title: ["けが人", "意識なし", "骨折"],
-          fields: ["場所"],
-          fixed: { "補足": "「移動できない」とのことなので、担架での保健室への案内をお願いします。" }
+        "意識なし": {
+          title: ["けが人", "意識なし", "{負傷内容}"],
+          titleFields: ["負傷内容"],
+          fields: ["場所", "補足"]
         }
       },
       "体調不良者": {
-        "意識有・腹痛": {
-          title: ["体調不良者", "意識有", "腹痛"],
-          fields: ["場所"],
-          fixed: { "詳細": "「移動できない」とのことなので、担架での保健室への案内をお願いします。" }
+        "意識有": {
+          title: ["体調不良者", "意識有", "{症状}"],
+          titleFields: ["症状"],
+          fields: ["場所", "詳細"]
         },
-        "意識なし・呼吸無": {
-          title: ["体調不良者", "意識なし", "呼吸無"],
-          fields: ["場所"],
-          fixed: { "詳細": "AED、救急車対応を行います。" }
-        },
-        "意識なし・呼吸有": {
-          title: ["体調不良者", "意識なし", "呼吸有"],
-          fields: ["場所"],
-          fixed: { "詳細": "通用門前に移動して対応を行います。" }
+        "意識なし": {
+          title: ["体調不良者", "意識なし", "{症状}"],
+          titleFields: ["症状"],
+          fields: ["場所", "詳細"]
         }
       },
       "クレーマー": {
@@ -129,6 +125,25 @@
           fields: ["背丈", "服装", "位置", "年齢"]
         }
       }
+    };
+
+    // 入力欄に薄く表示する例文（項目名 → 例文）
+    const EXAMPLES = {
+      "品物": "ミントグリーンの財布",
+      "場所": "ステージ後方再入場口付近",
+      "状況": "水色のハンカチをなくした女性がいます。最後に見たのはビンゴ受付待機列だそうです。",
+      "子供の名前": "はるかちゃん(５)女の子",
+      "服装": "茶色いワンピースに高めのお団子",
+      "同伴者": "母親",
+      "特徴": "黒いコートに白いシュシュで横結び",
+      "負傷内容": "骨折",
+      "補足":"「動けない」そうなので、担架での保健室への案内をお願いします。",
+      "症状": "腹痛",
+      "詳細": "AED、救急車対応を行います。",
+      "背丈": "中肉中背",
+      "位置": "景品付近",
+      "上回生": "いない",
+      "年齢": "中年男性",
     };
 
     // ===== 文章をつくる関数 =====
@@ -220,11 +235,11 @@
 
       const labels = (data.titleFields || []).concat(data.fields || []);
       for (const f of labels) {
-        fieldsDiv.innerHTML += `<label>${f}：<input data-label="${f}"></label><br>`;
+        fieldsDiv.innerHTML += `<label>${f}：<input data-label="${f}"　 placeholder="${EXAMPLES[f] || ""}"></label><br>`;
       }
       if (data.freeText) {
         fieldsDiv.innerHTML +=
-          `<label>${data.freeText}：<br><textarea data-label="${data.freeText}" rows="4"></textarea></label><br>`;
+          `<label>${data.freeText}：<br><textarea data-label="${data.freeText}" rows="4" placeholder="${EXAMPLES[data.freeText] || ""}"></textarea></label><br>`;
       }
       updatePreview();
     }
