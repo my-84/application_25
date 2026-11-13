@@ -1,4 +1,4 @@
-const CACHE_NAME = "report-tool-v4";
+const CACHE_NAME = "report-tool-v5";
 const FILES = ["./test.html"];
 
 // 着任したとき：倉庫にファイルをしまう
