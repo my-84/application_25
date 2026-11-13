@@ -37,6 +37,12 @@
       color: var(--sub);
     }
 
+    p {
+      font-size: 13px;
+      margin: 0 0 10px;
+      color: var(--sub);
+    }
+
     label {
       display: block;
       margin-bottom: 12px;
@@ -132,6 +138,8 @@
 
   <!-- ④ プレビュー（入力に合わせて自動で更新される） -->
   <h2>プレビュー</h2>
+  <p>一行目に"//"で始まるコメントがある場合は、その指示に従ってください。<br>
+    送信時にはコメントを削除してください。</p>
   <pre id="preview"></pre>
 
   <button id="copyBtn">コピー</button>
@@ -158,11 +166,13 @@
     const genres = {
       "落とし物": {
         "発見（取得）": {
+          comments: "// 写真を添付",
           title: ["落とし物", "取得", "{品物}"],
           titleFields: ["品物"],
           fields: ["場所"]
         },
         "問い合わせ（捜索）": {
+          comments: "// @岩瀬 をメンション",
           title: ["落とし物", "捜索", "{品物}"],
           titleFields: ["品物"],
           freeText: "状況",
@@ -171,11 +181,13 @@
       },
       "迷子": {
         "親が探している": {
+          comments: "// @岩瀬、@ぴ をメンション",
           title: ["迷子", "親が探している"],
           fields: ["子供の名前", "服装"],
           closing: "見つけたら報告をお願いします。"
         },
         "子供が探している": {
+          comments: "// @岩瀬、@ぴ をメンション",
           title: ["迷子", "子供が探している"],
           fields: ["子供の名前", "服装", "同伴者", "特徴"],
           closing: "見つけたら報告をお願いします。"
@@ -183,12 +195,14 @@
       },
       "けが人": {
         "意識有": {
+          comments: "// @岩瀬、@ぴ をメンション",
           title: ["けが人", "意識有", "{負傷内容}"],
           titleFields: ["負傷内容"],
           fields: ["場所"],
           freeText: "補足"
         },
         "意識なし": {
+          comments: "// @岩瀬、@ぴ をメンション",
           title: ["けが人", "意識なし", "{負傷内容}"],
           titleFields: ["負傷内容"],
           fields: ["場所"],
@@ -197,12 +211,14 @@
       },
       "体調不良者": {
         "意識有": {
+          comments: "// @岩瀬、@ぴ をメンション",
           title: ["体調不良者", "意識有", "{症状}"],
           titleFields: ["症状"],
           fields: ["場所"],
           freeText: "補足"
         },
         "意識なし": {
+          comments: "// @岩瀬、@ぴ をメンション",
           title: ["体調不良者", "意識なし", "{症状}"],
           titleFields: ["症状"],
           fields: ["場所"],
@@ -211,12 +227,14 @@
       },
       "クレーマー": {
         "報告": {
+          comments: "// @岩瀬 をメンション",
           title: ["クレーマー"],
           fields: ["背丈", "服装", "位置", "上回生"]
         }
       },
       "不審者": {
         "報告": {
+          comments: "// @岩瀬 をメンション",
           title: ["不審者"],
           fields: ["背丈", "服装", "位置", "年齢"]
         }
@@ -249,6 +267,10 @@
       const data = genres[genre][state];
       const fixed = data.fixed || {};
       const lines = [];
+
+      if (data.comments) {
+        lines.push(data.comments);
+      }
 
       // 1行目：タイトル（"{品物}" の部分を入力値に置き換える）
       const parts = data.title.map(function (part) {
