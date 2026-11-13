@@ -331,7 +331,7 @@
 
       const labels = (data.titleFields || []).concat(data.fields || []);
       for (const f of labels) {
-        fieldsDiv.innerHTML += `<label>${f}：<input data-label="${f}"　 placeholder="${EXAMPLES[f] || ""}"></label><br>`;
+        fieldsDiv.innerHTML += `<label>${f}：<input data-label="${f}" placeholder="${EXAMPLES[f] || ""}"></label><br>`;
       }
       if (data.freeText) {
         fieldsDiv.innerHTML +=
